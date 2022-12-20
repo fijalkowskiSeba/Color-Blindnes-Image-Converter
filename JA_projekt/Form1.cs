@@ -25,6 +25,80 @@ namespace JA_projekt
             textBoxC.Text = cResults;
         }
 
+        static double[,] multiplyMatrixes(double[,] matrixA, double[,] matrixB)
+        {
+            var rowsA = matrixA.GetLength(0);
+            var colsA = matrixA.GetLength(1);
+            var rowsB = matrixB.GetLength(0);
+            var colsB = matrixB.GetLength(1);
+
+            if (colsA != rowsB)
+            {
+                return new[,] { { -1.0 }, { -1.0 }, { -1.0 } };
+            }
+
+            double[,] result = new double[rowsA, colsB];
+
+            var sum = 0.0;
+            for (int i = 0; i < rowsA; i++)
+            {
+                for (int j = 0; j < colsB; j++)
+                {
+                    sum = 0;
+                    for (int k = 0; k < colsA; k++)
+                    {
+                        sum += matrixA[i, k] * matrixB[k, j];
+                    }
+                    result[i, j] = sum;
+                }
+            }
+
+            return result;
+        }
+
+        static double[,] RGBtoLMS(double[,] rgbMatrix) 
+        {
+            double[,] lms = new[,]
+            {
+            { 17.8824,  43.5161,    4.1194 },
+            { 3.4557,   27.1554,    3.8671 },
+            { 0.0300,   0.1843,     1.4671 }
+            };
+            
+            return multiplyMatrixes(lms, rgbMatrix);
+
+        }
+
+        static double[,] LMStoRGB(double[,] lmsMatrix)
+        {
+            double[,] rgb = new[,]
+            {
+            { 0.0809,   -0.1305,    0.1167 },
+            { -0.0102,  0.0540,     -0.1136 },
+            { -0.0004,  -0.0041,    0.6935 }
+            };
+
+            return multiplyMatrixes(rgb, lmsMatrix);
+
+        }
+
+        static double[,] LMStoProtanopia(double[,] lmsMatrix)
+        {
+            double[,] protanopia = new[,]
+            {
+            { 0.0,    2.0234,   -2.5258 },
+            { 0.0,    1.0,      0.0 },
+            { 0.0,    0.0,      1.0 }
+            };
+
+            return multiplyMatrixes(protanopia, lmsMatrix);
+
+        }
+
+
+
+
+
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
@@ -146,11 +220,22 @@ namespace JA_projekt
                     for (int j = 0; j < newBitmap.Height; j++) {
 
                         Color pixel = newBitmap.GetPixel(0, 0);
-                        var alpha = pixel.A;
-                        var red = pixel.R;
-                        var green = pixel.G;
-                        var blue = pixel.B;
-                    //MessageBox.Show(String.Format("A: {0}  R: {1}  G:  {2}  B: {3}", alpha,red,green,blue ));
+                        double[,] rgb = new[,] {
+                            { Convert.ToDouble( pixel.R)},
+                            { Convert.ToDouble(pixel.G)},
+                            { Convert.ToDouble(pixel.B)}
+                        };
+
+                        double[,] newPixel = new double[3, 1];
+                        newPixel = LMStoRGB( LMStoProtanopia( RGBtoLMS(rgb)));
+
+                        newBitmap.SetPixel(i, j, Color.FromArgb(pixel.A, 
+                            Convert.ToByte(newPixel[0, 0] ), 
+                            Convert.ToByte(newPixel[1, 0] ), 
+                            Convert.ToByte(newPixel[2, 0] )
+                            ));
+
+                    //MessageBox.Show(String.Format("R: {0}  G:  {1}  B: {2}", newPixel[0, 0], newPixel[1,0], newPixel[2,0] ));
                 }
                 }
 
@@ -248,4 +333,5 @@ namespace JA_projekt
 
         }
     }
+
 }
