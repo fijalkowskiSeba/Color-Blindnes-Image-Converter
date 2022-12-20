@@ -40,6 +40,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.trackBarThredNumber = new System.Windows.Forms.TrackBar();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.pictureBoxLeft = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -48,20 +50,10 @@
             this.buttonConvert = new System.Windows.Forms.Button();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.textBoxC = new System.Windows.Forms.TextBox();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.textBoxASM = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -85,8 +77,8 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.flowLayoutPanel2.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -217,9 +209,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 40);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(122, 15);
+            this.label1.Size = new System.Drawing.Size(129, 15);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Choose tread number";
+            this.label1.Text = "Choose thread number";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // trackBarThredNumber
@@ -235,6 +227,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.button3);
+            this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
@@ -242,9 +236,28 @@
             this.panel2.Size = new System.Drawing.Size(210, 277);
             this.panel2.TabIndex = 0;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(40, 197);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(134, 72);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "Save Results";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(40, 105);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(134, 72);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Clear Results";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(42, 105);
+            this.button2.Location = new System.Drawing.Point(40, 12);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(134, 72);
             this.button2.TabIndex = 1;
@@ -289,13 +302,13 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
             this.splitContainer3.Size = new System.Drawing.Size(462, 281);
-            this.splitContainer3.SplitterDistance = 175;
+            this.splitContainer3.SplitterDistance = 141;
             this.splitContainer3.TabIndex = 3;
             this.splitContainer3.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer3_SplitterMoved);
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(314, 40);
+            this.buttonSave.Location = new System.Drawing.Point(314, 24);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(118, 91);
             this.buttonSave.TabIndex = 2;
@@ -305,7 +318,7 @@
             // buttonConvert
             // 
             this.buttonConvert.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.buttonConvert.Location = new System.Drawing.Point(170, 40);
+            this.buttonConvert.Location = new System.Drawing.Point(169, 24);
             this.buttonConvert.Name = "buttonConvert";
             this.buttonConvert.Size = new System.Drawing.Size(118, 91);
             this.buttonConvert.TabIndex = 1;
@@ -315,9 +328,9 @@
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(22, 40);
+            this.buttonLoad.Location = new System.Drawing.Point(24, 24);
             this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(118, 91);
+            this.buttonLoad.Size = new System.Drawing.Size(117, 91);
             this.buttonLoad.TabIndex = 0;
             this.buttonLoad.Text = "Load picture";
             this.buttonLoad.UseVisualStyleBackColor = true;
@@ -332,154 +345,52 @@
             // 
             // splitContainer4.Panel1
             // 
-            this.splitContainer4.Panel1.Controls.Add(this.flowLayoutPanel1);
+            this.splitContainer4.Panel1.Controls.Add(this.panel4);
             // 
             // splitContainer4.Panel2
             // 
-            this.splitContainer4.Panel2.Controls.Add(this.flowLayoutPanel2);
-            this.splitContainer4.Size = new System.Drawing.Size(462, 102);
+            this.splitContainer4.Panel2.Controls.Add(this.panel5);
+            this.splitContainer4.Size = new System.Drawing.Size(462, 136);
             this.splitContainer4.SplitterDistance = 231;
             this.splitContainer4.TabIndex = 0;
             // 
-            // flowLayoutPanel1
+            // panel4
             // 
-            this.flowLayoutPanel1.Controls.Add(this.label3);
-            this.flowLayoutPanel1.Controls.Add(this.label4);
-            this.flowLayoutPanel1.Controls.Add(this.label5);
-            this.flowLayoutPanel1.Controls.Add(this.label6);
-            this.flowLayoutPanel1.Controls.Add(this.label7);
-            this.flowLayoutPanel1.Controls.Add(this.label8);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(227, 98);
-            this.flowLayoutPanel1.TabIndex = 0;
-            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint_2);
+            this.panel4.Controls.Add(this.textBoxC);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(227, 132);
+            this.panel4.TabIndex = 0;
             // 
-            // label3
+            // textBoxC
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 15);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Last 5 C# times";
-            this.label3.Click += new System.EventHandler(this.label3_Click_1);
+            this.textBoxC.Location = new System.Drawing.Point(-2, 0);
+            this.textBoxC.Multiline = true;
+            this.textBoxC.Name = "textBoxC";
+            this.textBoxC.ReadOnly = true;
+            this.textBoxC.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxC.Size = new System.Drawing.Size(229, 134);
+            this.textBoxC.TabIndex = 0;
             // 
-            // label4
+            // panel5
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 15);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(19, 15);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "1. ";
+            this.panel5.Controls.Add(this.textBoxASM);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(223, 132);
+            this.panel5.TabIndex = 0;
             // 
-            // label5
+            // textBoxASM
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 30);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(19, 15);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "2. ";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 45);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(16, 15);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "3.";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 60);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(16, 15);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "4.";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 75);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(16, 15);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "5.";
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.label9);
-            this.flowLayoutPanel2.Controls.Add(this.label10);
-            this.flowLayoutPanel2.Controls.Add(this.label11);
-            this.flowLayoutPanel2.Controls.Add(this.label12);
-            this.flowLayoutPanel2.Controls.Add(this.label13);
-            this.flowLayoutPanel2.Controls.Add(this.label14);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(223, 98);
-            this.flowLayoutPanel2.TabIndex = 1;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(97, 15);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Last 5 ASM times";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 15);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(19, 15);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "1. ";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 30);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(19, 15);
-            this.label11.TabIndex = 2;
-            this.label11.Text = "2. ";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 45);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(16, 15);
-            this.label12.TabIndex = 3;
-            this.label12.Text = "3.";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(3, 60);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(16, 15);
-            this.label13.TabIndex = 4;
-            this.label13.Text = "4.";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 75);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(16, 15);
-            this.label14.TabIndex = 5;
-            this.label14.Text = "5.";
+            this.textBoxASM.Location = new System.Drawing.Point(-3, 0);
+            this.textBoxASM.Multiline = true;
+            this.textBoxASM.Name = "textBoxASM";
+            this.textBoxASM.ReadOnly = true;
+            this.textBoxASM.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxASM.Size = new System.Drawing.Size(229, 134);
+            this.textBoxASM.TabIndex = 1;
             // 
             // Form1
             // 
@@ -489,6 +400,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Color blindness simulator";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -515,10 +427,10 @@
             this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
-            this.flowLayoutPanel2.ResumeLayout(false);
-            this.flowLayoutPanel2.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -542,22 +454,14 @@
         private RadioButton radioC;
         private SplitContainer splitContainer3;
         private SplitContainer splitContainer4;
-        private FlowLayoutPanel flowLayoutPanel1;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private Label label6;
-        private Label label7;
-        private Label label8;
         private Button buttonLoad;
-        private FlowLayoutPanel flowLayoutPanel2;
-        private Label label9;
-        private Label label10;
-        private Label label11;
-        private Label label12;
-        private Label label13;
-        private Label label14;
         private Button buttonSave;
         private Button buttonConvert;
+        private Panel panel4;
+        private TextBox textBoxC;
+        private Panel panel5;
+        private TextBox textBoxASM;
+        private Button button3;
+        private Button button1;
     }
 }

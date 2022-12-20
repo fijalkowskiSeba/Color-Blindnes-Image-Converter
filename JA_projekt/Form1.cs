@@ -1,3 +1,5 @@
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+
 namespace JA_projekt
 {
     public partial class Form1 : Form
@@ -5,9 +7,22 @@ namespace JA_projekt
         Bitmap original;
         Bitmap newBitmap;
 
+        
+        static String cResultsTitle = String.Format("C# results in ticks:{0}", Environment.NewLine);
+        static String asmResultsTitle = String.Format("ASM results in ticks:{0}", Environment.NewLine);
+
+        String cResults = cResultsTitle;
+        String asmResults = asmResultsTitle;
+
+        int cIterator = 0;
+        int amsIterator = 0;
+
+
         public Form1()
         {
             InitializeComponent();
+            textBoxASM.Text = asmResults;
+            textBoxC.Text = cResults;
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -120,25 +135,69 @@ namespace JA_projekt
 
             newBitmap = original;
             var threadNumber =Int32.Parse(textThredNumber.Text.Trim());
-
-
+            var message = "";
+            
             var watch = System.Diagnostics.Stopwatch.StartNew();
             if (radioC.Checked)
             {
                 // C# dll
+                for (int i = 0; i < newBitmap.Width; i++)
+                {
+                    for (int j = 0; j < newBitmap.Height; j++) {
+
+                        Color pixel = newBitmap.GetPixel(0, 0);
+                        var alpha = pixel.A;
+                        var red = pixel.R;
+                        var green = pixel.G;
+                        var blue = pixel.B;
+                    //MessageBox.Show(String.Format("A: {0}  R: {1}  G:  {2}  B: {3}", alpha,red,green,blue ));
+                }
+                }
+
+                //
+                cIterator++;
+                message += String.Format("{0}. ", cIterator);
             }
             else if (radioAsm.Checked)
-            { 
+            {
                 // ASM dll
+
+
+                //
+                amsIterator++;
+                message += String.Format("{0}. ", amsIterator);
             }
             watch.Stop();
             var time = watch.ElapsedTicks;
+            message += String.Format("{0} ticks ", time);
+            if (threadNumber == 1)
+            {
+                message += String.Format("using {0} thread", threadNumber);
+            }
+            else
+            {
+                message += String.Format("using {0} threads", threadNumber);
+            }
+
+            message += Environment.NewLine;
+
+            if (radioC.Checked)
+            {
+                cResults += message;
+                textBoxC.Text = cResults;
+            }
+            else
+            {
+                asmResults += message;
+                textBoxASM.Text = asmResults;
+            }
 
             
+
             Bitmap bitmapToDisplay = new Bitmap(newBitmap, new Size(pictureBox2.Width, pictureBox2.Height));
             pictureBox2.Image = bitmapToDisplay;
 
-            MessageBox.Show(String.Format("Execution took {0}", time.ToString()));
+            //MessageBox.Show(String.Format("Execution took {0}", time.ToString()));
 
         }
 
@@ -167,6 +226,26 @@ namespace JA_projekt
             String text = textThredNumber.Text;
 
            
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want clear results?", "Really?", MessageBoxButtons.YesNo);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                cResults = cResultsTitle;
+                textBoxC.Text = cResults;
+
+                asmResults = asmResultsTitle;
+                textBoxASM.Text = asmResults;
+            }
+
         }
     }
 }
