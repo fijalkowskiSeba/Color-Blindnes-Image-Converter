@@ -115,7 +115,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
             this.splitContainer1.Size = new System.Drawing.Size(463, 281);
-            this.splitContainer1.SplitterDistance = 245;
+            this.splitContainer1.SplitterDistance = 244;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer2
@@ -133,8 +133,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel1);
-            this.splitContainer2.Size = new System.Drawing.Size(245, 281);
-            this.splitContainer2.SplitterDistance = 135;
+            this.splitContainer2.Size = new System.Drawing.Size(244, 281);
+            this.splitContainer2.SplitterDistance = 134;
             this.splitContainer2.TabIndex = 0;
             // 
             // panel3
@@ -145,7 +145,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(241, 131);
+            this.panel3.Size = new System.Drawing.Size(240, 130);
             this.panel3.TabIndex = 0;
             // 
             // radioAsm
@@ -188,7 +188,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(241, 138);
+            this.panel1.Size = new System.Drawing.Size(240, 139);
             this.panel1.TabIndex = 0;
             // 
             // textThredNumber
@@ -233,7 +233,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(210, 277);
+            this.panel2.Size = new System.Drawing.Size(211, 277);
             this.panel2.TabIndex = 0;
             // 
             // button3
@@ -302,7 +302,7 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
             this.splitContainer3.Size = new System.Drawing.Size(462, 281);
-            this.splitContainer3.SplitterDistance = 141;
+            this.splitContainer3.SplitterDistance = 140;
             this.splitContainer3.TabIndex = 3;
             this.splitContainer3.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer3_SplitterMoved);
             // 
@@ -317,7 +317,7 @@
             // 
             // buttonConvert
             // 
-            this.buttonConvert.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.buttonConvert.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.buttonConvert.Location = new System.Drawing.Point(169, 24);
             this.buttonConvert.Name = "buttonConvert";
             this.buttonConvert.Size = new System.Drawing.Size(118, 91);
@@ -350,7 +350,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.panel5);
-            this.splitContainer4.Size = new System.Drawing.Size(462, 136);
+            this.splitContainer4.Size = new System.Drawing.Size(462, 137);
             this.splitContainer4.SplitterDistance = 231;
             this.splitContainer4.TabIndex = 0;
             // 
@@ -360,7 +360,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(227, 132);
+            this.panel4.Size = new System.Drawing.Size(227, 133);
             this.panel4.TabIndex = 0;
             // 
             // textBoxC
@@ -379,7 +379,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(223, 132);
+            this.panel5.Size = new System.Drawing.Size(223, 133);
             this.panel5.TabIndex = 0;
             // 
             // textBoxASM

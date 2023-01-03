@@ -1,11 +1,14 @@
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using Color = System.Drawing.Color;
+using Image = System.Drawing.Image;
+using Size = System.Drawing.Size;
 
 namespace JA_projekt
 {
     public partial class Form1 : Form
     {
         Bitmap original;
-        Bitmap newBitmap;
+        Bitmap newImage;
 
         
         static String cResultsTitle = String.Format("C# results in ticks:{0}", Environment.NewLine);
@@ -191,10 +194,11 @@ namespace JA_projekt
                 //geting file from dialog
                 String fileName = openFileDialog.FileName;
                 //loading file to bitmap
-                original = new Bitmap(fileName);
+                original = new Bitmap(fileName);        
+                
 
                 //new resized bitmap to display in small window
-                Bitmap bitmapToDisplay = new Bitmap(original, new Size(pictureBoxLeft.Width, pictureBoxLeft.Height));
+                Bitmap bitmapToDisplay = new Bitmap(original, new System.Drawing.Size(pictureBoxLeft.Width, pictureBoxLeft.Height));
                 pictureBoxLeft.Image = bitmapToDisplay;
 
             }
@@ -207,7 +211,8 @@ namespace JA_projekt
                 return;
             }
 
-            newBitmap = original;
+            newImage= new Bitmap(original);
+
             var threadNumber =Int32.Parse(textThredNumber.Text.Trim());
             var message = "";
             
@@ -215,28 +220,38 @@ namespace JA_projekt
             if (radioC.Checked)
             {
                 // C# dll
-                for (int i = 0; i < newBitmap.Width; i++)
+                //List<Task> tasks = new List<Task>();
+                
+                for (int i = 0; i < newImage.Width; i++)
                 {
-                    for (int j = 0; j < newBitmap.Height; j++) {
+                    for (int j = 0; j < newImage.Height; j++) {
 
-                        Color pixel = newBitmap.GetPixel(0, 0);
-                        double[,] rgb = new[,] {
-                            { Convert.ToDouble( pixel.R)},
-                            { Convert.ToDouble(pixel.G)},
-                            { Convert.ToDouble(pixel.B)}
+                        // pozyskać pixel
+                        Color pixel = original.GetPixel(i, j);
+
+                        // pixel -> macierz rgb
+                        double[,] rgb = new[,]
+                        {
+                            {(double)pixel.R },
+                            {(double)pixel.G },
+                            {(double)pixel.B }
                         };
 
-                        double[,] newPixel = new double[3, 1];
-                        newPixel = LMStoRGB( LMStoProtanopia( RGBtoLMS(rgb)));
+                        //macierz rgb -> macierz lms -> macierz lms z pronatiopią -> nowa macierz rgb
+                        rgb =  LMStoRGB(
+                            LMStoProtanopia(
+                                RGBtoLMS(
+                                    rgb)));
 
-                        newBitmap.SetPixel(i, j, Color.FromArgb(pixel.A, 
-                            Convert.ToByte(newPixel[0, 0] ), 
-                            Convert.ToByte(newPixel[1, 0] ), 
-                            Convert.ToByte(newPixel[2, 0] )
-                            ));
+                        // nowa macierz rgb -> pixel
+                        pixel = Color.FromArgb((int)(uint)rgb[0,0], (int)(uint)rgb[1,0], (int)(uint)rgb[2,0]);
 
-                    //MessageBox.Show(String.Format("R: {0}  G:  {1}  B: {2}", newPixel[0, 0], newPixel[1,0], newPixel[2,0] ));
-                }
+                        //wstawić nowy pixel
+                        newImage.SetPixel(i, j, pixel);
+
+                        // potrzeba image i pozycje pixla, to będą parametry metody w dll
+
+                    }
                 }
 
                 //
@@ -277,9 +292,7 @@ namespace JA_projekt
                 textBoxASM.Text = asmResults;
             }
 
-            
-
-            Bitmap bitmapToDisplay = new Bitmap(newBitmap, new Size(pictureBox2.Width, pictureBox2.Height));
+            Bitmap bitmapToDisplay = new Bitmap(newImage, new Size(pictureBox2.Width, pictureBox2.Height));
             pictureBox2.Image = bitmapToDisplay;
 
             //MessageBox.Show(String.Format("Execution took {0}", time.ToString()));
