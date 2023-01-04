@@ -1,8 +1,4 @@
-﻿using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
-using Color = System.Drawing.Color;
-using Image = System.Drawing.Image;
+﻿using Color = System.Drawing.Color;
 using Size = System.Drawing.Size;
 
 namespace JA_projekt
@@ -29,80 +25,6 @@ namespace JA_projekt
             textBoxASM.Text = asmResults;
             textBoxC.Text = cResults;
         }
-
-        static double[,] multiplyMatrixes(double[,] matrixA, double[,] matrixB)
-        {
-            var rowsA = matrixA.GetLength(0);
-            var colsA = matrixA.GetLength(1);
-            var rowsB = matrixB.GetLength(0);
-            var colsB = matrixB.GetLength(1);
-
-            if (colsA != rowsB)
-            {
-                return new[,] { { -1.0 }, { -1.0 }, { -1.0 } };
-            }
-
-            double[,] result = new double[rowsA, colsB];
-
-            var sum = 0.0;
-            for (int i = 0; i < rowsA; i++)
-            {
-                for (int j = 0; j < colsB; j++)
-                {
-                    sum = 0;
-                    for (int k = 0; k < colsA; k++)
-                    {
-                        sum += matrixA[i, k] * matrixB[k, j];
-                    }
-                    result[i, j] = sum;
-                }
-            }
-
-            return result;
-        }
-
-        static double[,] RGBtoLMS(double[,] rgbMatrix)
-        {
-            double[,] lms = new[,]
-            {
-            { 17.8824,  43.5161,    4.1194 },
-            { 3.4557,   27.1554,    3.8671 },
-            { 0.0300,   0.1843,     1.4671 }
-            };
-
-            return multiplyMatrixes(lms, rgbMatrix);
-
-        }
-
-        static double[,] LMStoRGB(double[,] lmsMatrix)
-        {
-            double[,] rgb = new[,]
-            {
-            { 0.0809,   -0.1305,    0.1167 },
-            { -0.0102,  0.0540,     -0.1136 },
-            { -0.0004,  -0.0041,    0.6935 }
-            };
-
-            return multiplyMatrixes(rgb, lmsMatrix);
-
-        }
-
-        static double[,] LMStoProtanopia(double[,] lmsMatrix)
-        {
-            double[,] protanopia = new[,]
-            {
-            { 0.0,    2.0234,   -2.5258 },
-            { 0.0,    1.0,      0.0 },
-            { 0.0,    0.0,      1.0 }
-            };
-
-            return multiplyMatrixes(protanopia, lmsMatrix);
-
-        }
-
-
-
-
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
@@ -211,6 +133,7 @@ namespace JA_projekt
 
         private void buttonConvert_Click(object sender, EventArgs e)
         {
+            //Gdy nie ma obrazu
             if (original == null)
             {
                 MessageBox.Show("Choose file to convert first!!!");
@@ -222,74 +145,76 @@ namespace JA_projekt
             var threadNumber = Int32.Parse(textThredNumber.Text.Trim());
             var message = "";
 
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            if (radioC.Checked)
+            List<(int x, int y)> pixelCoordinates = new List<(int x, int y)>();
+            for (int y = 0; y < original.Height; y++)
             {
-                // C# dll
-
-                LockBitmap lockBitmap = new LockBitmap(original);
-
-                List<(int x, int y)> pixelCoordinates = new List<(int x, int y)>();
-
-                for (int y = 0; y < original.Height; y++)
+                for (int x = 0; x < original.Width; x++)
                 {
-                    for (int x = 0; x < original.Width; x++)
-                    {
-                        pixelCoordinates.Add((x, y));
-                    }
+                    pixelCoordinates.Add((x, y));
                 }
+            }
 
-                lockBitmap.LockBits();
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            LockBitmap lockBitmap = new LockBitmap(original);
+            lockBitmap.LockBits();
 
-                Parallel.ForEach(pixelCoordinates, new ParallelOptions() { MaxDegreeOfParallelism = threadNumber }, (coordinates) =>
+            Parallel.ForEach(pixelCoordinates, new ParallelOptions() { MaxDegreeOfParallelism = threadNumber }, (coordinates) =>
+            {
+                // coordinates is a tuple containing the x and y coordinates of a pixel
+                int x = coordinates.x;
+                int y = coordinates.y;
+
+                // Process the pixel at (x, y)
+                Color originalPixel = lockBitmap.GetPixel(x, y);
+
+
+                double[,] rgb = new[,]
                 {
-                    // coordinates is a tuple containing the x and y coordinates of a pixel
-                    int x = coordinates.x;
-                    int y = coordinates.y;
-
-                    // Process the pixel at (x, y)
-                    Color originalPixel = lockBitmap.GetPixel(x, y);
-                    // ...
-
-                    // Convert the pixel to the protanopia simulation of the RGB color space
-                    double[,] rgb = new[,]
-                    {
                             {(double)originalPixel.R },
                             {(double)originalPixel.G },
                             {(double)originalPixel.B }
-                        };
+                };
 
-                    //ten kawałek trzeba mierzyć, reszta to jest mało istotna
-                    //macierz rgb -> macierz lms -> macierz lms z pronatiopią -> nowa macierz rgb
-                    rgb = LMStoRGB(
-                        LMStoProtanopia(
-                            RGBtoLMS(
+                if (radioC.Checked)
+                {
+                    // C# dll
+                    rgb =
+                    MatrixMultiplication.LMStoRGB(
+                        MatrixMultiplication.LMStoProtanopia(
+                            MatrixMultiplication.RGBtoLMS(
                                 rgb)));
+                }
+                else
+                {
+                    // ASM dll
 
-                    // nowa macierz rgb -> pixel
-                    Color pixel = Color.FromArgb((int)(uint)rgb[0, 0], (int)(uint)rgb[1, 0], (int)(uint)rgb[2, 0]);
 
-                    lockBitmap.SetPixel(x, y, pixel);
 
-                });
+                }
+                // nowa macierz rgb -> pixel
+                Color pixel = Color.FromArgb((int)(uint)rgb[0, 0], (int)(uint)rgb[1, 0], (int)(uint)rgb[2, 0]);
 
-                lockBitmap.UnlockBits();
+                lockBitmap.SetPixel(x, y, pixel);
 
-                //
+            });
+
+            lockBitmap.UnlockBits();
+            watch.Stop();
+            var time = watch.ElapsedTicks;
+
+
+
+            if (radioC.Checked)
+            {
                 cIterator++;
                 message += String.Format("{0}. ", cIterator);
             }
             else if (radioAsm.Checked)
             {
-                // ASM dll
-
-
-                //
                 amsIterator++;
                 message += String.Format("{0}. ", amsIterator);
             }
-            watch.Stop();
-            var time = watch.ElapsedTicks;
+
             message += String.Format("{0} ticks ", time);
             if (threadNumber == 1)
             {
@@ -317,9 +242,6 @@ namespace JA_projekt
             pictureBox2.Image = bitmapToDisplay;
 
             newImage = original;
-
-            //MessageBox.Show(String.Format("Execution took {0}", time.ToString()));
-
         }
 
         private void textChanged_treadNumber(object sender, EventArgs e)
@@ -345,8 +267,6 @@ namespace JA_projekt
         private void textBox_ThreadNumber_keyPress(object sender, KeyPressEventArgs e)
         {
             String text = textThredNumber.Text;
-
-
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
