@@ -1,4 +1,6 @@
-﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+﻿using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using Color = System.Drawing.Color;
 using Image = System.Drawing.Image;
 using Size = System.Drawing.Size;
@@ -8,9 +10,9 @@ namespace JA_projekt
     public partial class Form1 : Form
     {
         Bitmap original;
-        Bitmap newImage;
+        Bitmap newImage = null;
 
-        
+
         static String cResultsTitle = String.Format("C# results in ticks:{0}", Environment.NewLine);
         static String asmResultsTitle = String.Format("ASM results in ticks:{0}", Environment.NewLine);
 
@@ -59,7 +61,7 @@ namespace JA_projekt
             return result;
         }
 
-        static double[,] RGBtoLMS(double[,] rgbMatrix) 
+        static double[,] RGBtoLMS(double[,] rgbMatrix)
         {
             double[,] lms = new[,]
             {
@@ -67,7 +69,7 @@ namespace JA_projekt
             { 3.4557,   27.1554,    3.8671 },
             { 0.0300,   0.1843,     1.4671 }
             };
-            
+
             return multiplyMatrixes(lms, rgbMatrix);
 
         }
@@ -145,7 +147,7 @@ namespace JA_projekt
         private void scrool_changed(object sender, EventArgs e)
         {
             int value = trackBarThredNumber.Value;
-            textThredNumber.Text =  value.ToString();   
+            textThredNumber.Text = value.ToString();
         }
 
         private void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
@@ -194,8 +196,8 @@ namespace JA_projekt
                 //geting file from dialog
                 String fileName = openFileDialog.FileName;
                 //loading file to bitmap
-                original = new Bitmap(fileName);        
-                
+                original = new Bitmap(fileName);
+
 
                 //new resized bitmap to display in small window
                 Bitmap bitmapToDisplay = new Bitmap(original, new System.Drawing.Size(pictureBoxLeft.Width, pictureBoxLeft.Height));
@@ -204,55 +206,74 @@ namespace JA_projekt
             }
         }
 
+
+
+
         private void buttonConvert_Click(object sender, EventArgs e)
         {
-            if (original == null) {
+            if (original == null)
+            {
                 MessageBox.Show("Choose file to convert first!!!");
                 return;
             }
 
-            newImage= new Bitmap(original);
+            newImage = new Bitmap(original);
 
-            var threadNumber =Int32.Parse(textThredNumber.Text.Trim());
+            var threadNumber = Int32.Parse(textThredNumber.Text.Trim());
             var message = "";
-            
+
             var watch = System.Diagnostics.Stopwatch.StartNew();
             if (radioC.Checked)
             {
                 // C# dll
-                //List<Task> tasks = new List<Task>();
-                
-                for (int i = 0; i < newImage.Width; i++)
+
+                LockBitmap lockBitmap = new LockBitmap(original);
+
+                List<(int x, int y)> pixelCoordinates = new List<(int x, int y)>();
+
+                for (int y = 0; y < original.Height; y++)
                 {
-                    for (int j = 0; j < newImage.Height; j++) {
-
-                        // pozyskać pixel
-                        Color pixel = original.GetPixel(i, j);
-
-                        // pixel -> macierz rgb
-                        double[,] rgb = new[,]
-                        {
-                            {(double)pixel.R },
-                            {(double)pixel.G },
-                            {(double)pixel.B }
-                        };
-
-                        //macierz rgb -> macierz lms -> macierz lms z pronatiopią -> nowa macierz rgb
-                        rgb =  LMStoRGB(
-                            LMStoProtanopia(
-                                RGBtoLMS(
-                                    rgb)));
-
-                        // nowa macierz rgb -> pixel
-                        pixel = Color.FromArgb((int)(uint)rgb[0,0], (int)(uint)rgb[1,0], (int)(uint)rgb[2,0]);
-
-                        //wstawić nowy pixel
-                        newImage.SetPixel(i, j, pixel);
-
-                        // potrzeba image i pozycje pixla, to będą parametry metody w dll
-
+                    for (int x = 0; x < original.Width; x++)
+                    {
+                        pixelCoordinates.Add((x, y));
                     }
                 }
+
+                lockBitmap.LockBits();
+
+                Parallel.ForEach(pixelCoordinates, new ParallelOptions() { MaxDegreeOfParallelism = threadNumber }, (coordinates) =>
+                {
+                    // coordinates is a tuple containing the x and y coordinates of a pixel
+                    int x = coordinates.x;
+                    int y = coordinates.y;
+
+                    // Process the pixel at (x, y)
+                    Color originalPixel = lockBitmap.GetPixel(x, y);
+                    // ...
+
+                    // Convert the pixel to the protanopia simulation of the RGB color space
+                    double[,] rgb = new[,]
+                    {
+                            {(double)originalPixel.R },
+                            {(double)originalPixel.G },
+                            {(double)originalPixel.B }
+                        };
+
+                    //ten kawałek trzeba mierzyć, reszta to jest mało istotna
+                    //macierz rgb -> macierz lms -> macierz lms z pronatiopią -> nowa macierz rgb
+                    rgb = LMStoRGB(
+                        LMStoProtanopia(
+                            RGBtoLMS(
+                                rgb)));
+
+                    // nowa macierz rgb -> pixel
+                    Color pixel = Color.FromArgb((int)(uint)rgb[0, 0], (int)(uint)rgb[1, 0], (int)(uint)rgb[2, 0]);
+
+                    lockBitmap.SetPixel(x, y, pixel);
+
+                });
+
+                lockBitmap.UnlockBits();
 
                 //
                 cIterator++;
@@ -292,8 +313,10 @@ namespace JA_projekt
                 textBoxASM.Text = asmResults;
             }
 
-            Bitmap bitmapToDisplay = new Bitmap(newImage, new Size(pictureBox2.Width, pictureBox2.Height));
+            Bitmap bitmapToDisplay = new Bitmap(original, new Size(pictureBox2.Width, pictureBox2.Height));
             pictureBox2.Image = bitmapToDisplay;
+
+            newImage = original;
 
             //MessageBox.Show(String.Format("Execution took {0}", time.ToString()));
 
@@ -323,7 +346,7 @@ namespace JA_projekt
         {
             String text = textThredNumber.Text;
 
-           
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -342,9 +365,32 @@ namespace JA_projekt
 
                 asmResults = asmResultsTitle;
                 textBoxASM.Text = asmResults;
+
+                cIterator = 0;
+                amsIterator = 0;
             }
 
         }
-    }
 
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            if (newImage == null)
+            {
+                MessageBox.Show("First convert some picture !!!");
+                return;
+            }
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "JPeg Image|*.jpg";
+            saveFileDialog1.Title = "Save an Image File";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+                System.IO.FileStream fs = (System.IO.FileStream)saveFileDialog1.OpenFile();
+                newImage.Save(fs, System.Drawing.Imaging.ImageFormat.Jpeg);
+                fs.Close();
+            }
+        }
+    }
 }
