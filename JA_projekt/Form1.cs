@@ -155,7 +155,7 @@ namespace JA_projekt
             }
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            LockBitmap lockBitmap = new LockBitmap(original);
+            LockBitmap lockBitmap = new LockBitmap(newImage);
             lockBitmap.LockBits();
 
             Parallel.ForEach(pixelCoordinates, new ParallelOptions() { MaxDegreeOfParallelism = threadNumber }, (coordinates) =>
@@ -187,7 +187,6 @@ namespace JA_projekt
                 else
                 {
                     // ASM dll
-
 
 
                 }
@@ -238,7 +237,7 @@ namespace JA_projekt
                 textBoxASM.Text = asmResults;
             }
 
-            Bitmap bitmapToDisplay = new Bitmap(original, new Size(pictureBox2.Width, pictureBox2.Height));
+            Bitmap bitmapToDisplay = new Bitmap(newImage, new Size(pictureBox2.Width, pictureBox2.Height));
             pictureBox2.Image = bitmapToDisplay;
 
             newImage = original;
