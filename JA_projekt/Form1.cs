@@ -1,4 +1,5 @@
-﻿using Color = System.Drawing.Color;
+﻿using System.Runtime.InteropServices;
+using Color = System.Drawing.Color;
 using Size = System.Drawing.Size;
 
 namespace JA_projekt
@@ -128,8 +129,8 @@ namespace JA_projekt
             }
         }
 
-
-
+        [DllImport(@"D:\JA_projekt\JA_projekt\x64\Debug\ASM.dll")]
+        static extern int rgbEdit(int a, int b);
 
         private void buttonConvert_Click(object sender, EventArgs e)
         {
@@ -168,11 +169,11 @@ namespace JA_projekt
                 Color originalPixel = lockBitmap.GetPixel(x, y);
 
 
-                double[,] rgb = new[,]
+                float[,] rgb = new[,]
                 {
-                            {(double)originalPixel.R },
-                            {(double)originalPixel.G },
-                            {(double)originalPixel.B }
+                            {(float)originalPixel.R },
+                            {(float)originalPixel.G },
+                            {(float)originalPixel.B }
                 };
 
                 if (radioC.Checked)
@@ -187,7 +188,10 @@ namespace JA_projekt
                 else
                 {
                     // ASM dll
-
+                    int a = 2;
+                    int b = 3;
+                    int retVal = rgbEdit(a, b);
+                    MessageBox.Show("ASM test = "+retVal );
 
                 }
                 // nowa macierz rgb -> pixel

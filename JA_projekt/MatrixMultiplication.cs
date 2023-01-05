@@ -2,7 +2,7 @@
 {
     public static class MatrixMultiplication
     {
-        private static double[,] multiplyMatrixes(double[,] matrixA, double[,] matrixB)
+        private static float[,] multiplyMatrixes(float[,] matrixA, float[,] matrixB)
         {
             var rowsA = matrixA.GetLength(0);
             var colsA = matrixA.GetLength(1);
@@ -11,12 +11,12 @@
 
             if (colsA != rowsB)
             {
-                return new[,] { { -1.0 }, { -1.0 }, { -1.0 } };
+                return new[,] { { -1.0f }, { -1.0f }, { -1.0f } };
             }
 
-            double[,] result = new double[rowsA, colsB];
+            float[,] result = new float[rowsA, colsB];
 
-            var sum = 0.0;
+            float sum = 0.0f;
             for (int i = 0; i < rowsA; i++)
             {
                 for (int j = 0; j < colsB; j++)
@@ -33,39 +33,39 @@
             return result;
         }
 
-        public static double[,] RGBtoLMS(double[,] rgbMatrix)
+        public static float[,] RGBtoLMS(float[,] rgbMatrix)
         {
-            double[,] lms = new[,]
+            float[,] lms = new[,]
             {
-            { 17.8824,  43.5161,    4.1194 },
-            { 3.4557,   27.1554,    3.8671 },
-            { 0.0300,   0.1843,     1.4671 }
+            { 17.8824f,  43.5161f,    4.1194f },
+            { 3.4557f,   27.1554f,    3.8671f },
+            { 0.0300f,   0.1843f,     1.4671f }
             };
 
             return multiplyMatrixes(lms, rgbMatrix);
 
         }
 
-        public static double[,] LMStoRGB(double[,] lmsMatrix)
+        public static float[,] LMStoRGB(float[,] lmsMatrix)
         {
-            double[,] rgb = new[,]
+            float[,] rgb = new[,]
             {
-            { 0.0809,   -0.1305,    0.1167 },
-            { -0.0102,  0.0540,     -0.1136 },
-            { -0.0004,  -0.0041,    0.6935 }
+            { 0.0809f,   -0.1305f,    0.1167f },
+            { -0.0102f,  0.0540f,     -0.1136f },
+            { -0.0004f,  -0.0041f,    0.6935f }
             };
 
             return multiplyMatrixes(rgb, lmsMatrix);
 
         }
 
-        public static double[,] LMStoProtanopia(double[,] lmsMatrix)
+        public static float[,] LMStoProtanopia(float[,] lmsMatrix)
         {
-            double[,] protanopia = new[,]
+            float[,] protanopia = new[,]
             {
-            { 0.0,    2.0234,   -2.5258 },
-            { 0.0,    1.0,      0.0 },
-            { 0.0,    0.0,      1.0 }
+            { 0.0f,    2.0234f,   -2.5258f },
+            { 0.0f,    1.0f,      0.0f },
+            { 0.0f,    0.0f,      1.0f }
             };
 
             return multiplyMatrixes(protanopia, lmsMatrix);
