@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "JA_projekt": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

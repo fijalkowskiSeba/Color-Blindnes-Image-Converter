@@ -129,122 +129,134 @@ namespace JA_projekt
             }
         }
 
-        [DllImport(@"D:\JA_projekt\JA_projekt\x64\Debug\ASM.dll")]
-        static extern int rgbEdit(int a, int b);
 
+
+
+        
+        [DllImport(@"D:\JA_projekt\JA_projekt\x64\Debug\ASM.dll")]
+        static extern void rgbEdit(float[,] rgb, float[,]result );
         private void buttonConvert_Click(object sender, EventArgs e)
         {
-            //Gdy nie ma obrazu
-            if (original == null)
-            {
-                MessageBox.Show("Choose file to convert first!!!");
-                return;
-            }
+            
 
-            newImage = new Bitmap(original);
-
-            var threadNumber = Int32.Parse(textThredNumber.Text.Trim());
-            var message = "";
-
-            List<(int x, int y)> pixelCoordinates = new List<(int x, int y)>();
-            for (int y = 0; y < original.Height; y++)
-            {
-                for (int x = 0; x < original.Width; x++)
+                //Gdy nie ma obrazu
+                if (original == null)
                 {
-                    pixelCoordinates.Add((x, y));
+                    MessageBox.Show("Choose file to convert first!!!");
+                    return;
                 }
-            }
 
-            var watch = System.Diagnostics.Stopwatch.StartNew();
-            LockBitmap lockBitmap = new LockBitmap(newImage);
-            lockBitmap.LockBits();
+                newImage = new Bitmap(original);
 
-            Parallel.ForEach(pixelCoordinates, new ParallelOptions() { MaxDegreeOfParallelism = threadNumber }, (coordinates) =>
-            {
-                // coordinates is a tuple containing the x and y coordinates of a pixel
-                int x = coordinates.x;
-                int y = coordinates.y;
+                var threadNumber = Int32.Parse(textThredNumber.Text.Trim());
+                var message = "";
 
-                // Process the pixel at (x, y)
-                Color originalPixel = lockBitmap.GetPixel(x, y);
-
-
-                float[,] rgb = new[,]
+                List<(int x, int y)> pixelCoordinates = new List<(int x, int y)>();
+                for (int y = 0; y < original.Height; y++)
                 {
+                    for (int x = 0; x < original.Width; x++)
+                    {
+                        pixelCoordinates.Add((x, y));
+                    }
+                }
+
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                LockBitmap lockBitmap = new LockBitmap(newImage);
+                lockBitmap.LockBits();
+
+                Parallel.ForEach(pixelCoordinates, new ParallelOptions() { MaxDegreeOfParallelism = threadNumber }, (coordinates) =>
+                {
+                    // coordinates is a tuple containing the x and y coordinates of a pixel
+                    int x = coordinates.x;
+                    int y = coordinates.y;
+
+                    // Process the pixel at (x, y)
+                    Color originalPixel = lockBitmap.GetPixel(x, y);
+
+
+
+                    float[,] rgb = new[,]
+                    {
                             {(float)originalPixel.R },
                             {(float)originalPixel.G },
                             {(float)originalPixel.B }
-                };
+                    };
+
+                    if (radioC.Checked)
+                    {
+                        // C# dll
+                        rgb =
+                        MatrixMultiplication.LMStoRGB(
+                            MatrixMultiplication.LMStoProtanopia(
+                                MatrixMultiplication.RGBtoLMS(
+                                    rgb)));
+                    }
+                    else
+                    {
+                        //ASM dll TODO
+                        float[,] result = new float[3, 1]; 
+
+                        rgbEdit(rgb, result);
+
+                        rgb = result;
+                    }
+
+                    int r = Math.Abs((int)rgb[0, 0]);
+                    int g = Math.Abs((int)rgb[1, 0]);
+                    int b = Math.Abs((int)rgb[2, 0]);
+
+
+                    // nowa macierz rgb -> pixel
+                    Color pixel = Color.FromArgb(r,g,b );
+
+                    lockBitmap.SetPixel(x, y, pixel);
+
+                });
+
+                lockBitmap.UnlockBits();
+                watch.Stop();
+                var time = watch.ElapsedTicks;
+
+
 
                 if (radioC.Checked)
                 {
-                    // C# dll
-                    rgb =
-                    MatrixMultiplication.LMStoRGB(
-                        MatrixMultiplication.LMStoProtanopia(
-                            MatrixMultiplication.RGBtoLMS(
-                                rgb)));
+                    cIterator++;
+                    message += String.Format("{0}. ", cIterator);
+                }
+                else if (radioAsm.Checked)
+                {
+                    amsIterator++;
+                    message += String.Format("{0}. ", amsIterator);
+                }
+
+                message += String.Format("{0} ticks ", time);
+                if (threadNumber == 1)
+                {
+                    message += String.Format("using {0} thread", threadNumber);
                 }
                 else
                 {
-                    // ASM dll
-                    int a = 2;
-                    int b = 3;
-                    int retVal = rgbEdit(a, b);
-                    MessageBox.Show("ASM test = "+retVal );
-
+                    message += String.Format("using {0} threads", threadNumber);
                 }
-                // nowa macierz rgb -> pixel
-                Color pixel = Color.FromArgb((int)(uint)rgb[0, 0], (int)(uint)rgb[1, 0], (int)(uint)rgb[2, 0]);
 
-                lockBitmap.SetPixel(x, y, pixel);
+                message += Environment.NewLine;
 
-            });
+                if (radioC.Checked)
+                {
+                    cResults += message;
+                    textBoxC.Text = cResults;
+                }
+                else
+                {
+                    asmResults += message;
+                    textBoxASM.Text = asmResults;
+                }
 
-            lockBitmap.UnlockBits();
-            watch.Stop();
-            var time = watch.ElapsedTicks;
+                Bitmap bitmapToDisplay = new Bitmap(newImage, new Size(pictureBox2.Width, pictureBox2.Height));
+                pictureBox2.Image = bitmapToDisplay;
 
-
-
-            if (radioC.Checked)
-            {
-                cIterator++;
-                message += String.Format("{0}. ", cIterator);
-            }
-            else if (radioAsm.Checked)
-            {
-                amsIterator++;
-                message += String.Format("{0}. ", amsIterator);
-            }
-
-            message += String.Format("{0} ticks ", time);
-            if (threadNumber == 1)
-            {
-                message += String.Format("using {0} thread", threadNumber);
-            }
-            else
-            {
-                message += String.Format("using {0} threads", threadNumber);
-            }
-
-            message += Environment.NewLine;
-
-            if (radioC.Checked)
-            {
-                cResults += message;
-                textBoxC.Text = cResults;
-            }
-            else
-            {
-                asmResults += message;
-                textBoxASM.Text = asmResults;
-            }
-
-            Bitmap bitmapToDisplay = new Bitmap(newImage, new Size(pictureBox2.Width, pictureBox2.Height));
-            pictureBox2.Image = bitmapToDisplay;
-
-            newImage = original;
+            
         }
 
         private void textChanged_treadNumber(object sender, EventArgs e)
