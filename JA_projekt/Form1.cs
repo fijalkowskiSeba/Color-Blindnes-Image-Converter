@@ -134,7 +134,7 @@ namespace JA_projekt
 
         
         [DllImport(@"D:\JA_projekt\JA_projekt\x64\Debug\ASM.dll")]
-        static extern void rgbEdit(float[,] rgb, float[,]result );
+        static extern void rgbEdit(float[,] rgb);
         private void buttonConvert_Click(object sender, EventArgs e)
         {
             
@@ -193,12 +193,8 @@ namespace JA_projekt
                     }
                     else
                     {
-                        //ASM dll TODO
-                        float[,] result = new float[3, 1]; 
-
-                        rgbEdit(rgb, result);
-
-                        rgb = result;
+                        // ASM dll
+                        rgbEdit(rgb);
                     }
 
                     int r = Math.Abs((int)rgb[0, 0]);
