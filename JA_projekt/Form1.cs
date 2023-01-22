@@ -316,7 +316,7 @@ namespace JA_projekt
             }
 
            
-            using (StreamWriter outfile = new StreamWriter(@"D:\JA_projekt\wyniki{0}.csv"))
+            using (StreamWriter outfile = new StreamWriter(@"D:\JA_projekt\wyniki.csv"))
             {
                 
                 string content = "SMALL;ASM;C#;;MEDIUM;ASM;C#;;BIG;ASM;C#";
