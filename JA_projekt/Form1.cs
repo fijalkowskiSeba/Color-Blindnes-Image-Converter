@@ -281,7 +281,7 @@ namespace JA_projekt
                 big = new Bitmap(fileName);
             }
 
-            int[] array = new int[] { 1, 2, 4,6, 8,12, 16,24, 32, 64 };
+            int[] array = new int[] { 1, 2, 4, 6, 8, 12, 16, 32, 64 };
             var arrayLenghth = array.Length;
 
             long[,] smallASMResults = new long[arrayLenghth, 1];
