@@ -17,9 +17,6 @@ public class LockBitmap
         this.source = source;
     }
 
-    /// <summary>
-    /// Lock bitmap data
-    /// </summary>
     public void LockBits()
     {
         try
@@ -61,9 +58,6 @@ public class LockBitmap
         }
     }
 
-    /// <summary>
-    /// Unlock bitmap data
-    /// </summary>
     public void UnlockBits()
     {
         try
