@@ -1,5 +1,6 @@
-﻿namespace JA_projekt
+﻿namespace CSHARP
 {
+    //D:\JA_projekt\JA_projekt\CSHARP\bin\Release\net6.0\CSHARP.dll
     public static class MatrixMultiplication
     {
         private static float[,] multiplyMatrixes(float[,] matrixA, float[,] matrixB)
@@ -71,5 +72,15 @@
             return multiplyMatrixes(protanopia, lmsMatrix);
 
         }
+
+        public static float[,] rgbToPronatopia(float[,] rgb)
+        {
+            return
+                 LMStoRGB(
+                     LMStoProtanopia(
+                               RGBtoLMS(
+                                   rgb)));
+        }
     }
 }
+

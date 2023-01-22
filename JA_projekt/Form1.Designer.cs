@@ -36,11 +36,11 @@
             this.radioC = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cpuLabel = new System.Windows.Forms.Label();
             this.textThredNumber = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.trackBarThredNumber = new System.Windows.Forms.TrackBar();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.pictureBoxLeft = new System.Windows.Forms.PictureBox();
@@ -96,15 +96,14 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(946, 583);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1079, 697);
             this.tableLayoutPanel1.TabIndex = 0;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint_1);
             // 
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(477, 296);
+            this.splitContainer1.Location = new System.Drawing.Point(544, 353);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -114,8 +113,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
-            this.splitContainer1.Size = new System.Drawing.Size(463, 281);
-            this.splitContainer1.SplitterDistance = 244;
+            this.splitContainer1.Size = new System.Drawing.Size(529, 338);
+            this.splitContainer1.SplitterDistance = 316;
             this.splitContainer1.TabIndex = 0;
             // 
             // splitContainer2
@@ -133,8 +132,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel1);
-            this.splitContainer2.Size = new System.Drawing.Size(244, 281);
-            this.splitContainer2.SplitterDistance = 134;
+            this.splitContainer2.Size = new System.Drawing.Size(316, 338);
+            this.splitContainer2.SplitterDistance = 144;
             this.splitContainer2.TabIndex = 0;
             // 
             // panel3
@@ -145,15 +144,16 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(240, 130);
+            this.panel3.Size = new System.Drawing.Size(312, 140);
             this.panel3.TabIndex = 0;
             // 
             // radioAsm
             // 
             this.radioAsm.AutoSize = true;
-            this.radioAsm.Location = new System.Drawing.Point(16, 65);
+            this.radioAsm.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.radioAsm.Location = new System.Drawing.Point(212, 75);
             this.radioAsm.Name = "radioAsm";
-            this.radioAsm.Size = new System.Drawing.Size(50, 19);
+            this.radioAsm.Size = new System.Drawing.Size(82, 36);
             this.radioAsm.TabIndex = 2;
             this.radioAsm.TabStop = true;
             this.radioAsm.Text = "ASM";
@@ -162,9 +162,10 @@
             // radioC
             // 
             this.radioC.AutoSize = true;
-            this.radioC.Location = new System.Drawing.Point(16, 40);
+            this.radioC.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.radioC.Location = new System.Drawing.Point(33, 75);
             this.radioC.Name = "radioC";
-            this.radioC.Size = new System.Drawing.Size(40, 19);
+            this.radioC.Size = new System.Drawing.Size(61, 36);
             this.radioC.TabIndex = 1;
             this.radioC.TabStop = true;
             this.radioC.Text = "C#";
@@ -173,81 +174,79 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 11);
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(94, 27);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 15);
+            this.label2.Size = new System.Drawing.Size(127, 32);
             this.label2.TabIndex = 0;
             this.label2.Text = "Choose dll";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cpuLabel);
             this.panel1.Controls.Add(this.textThredNumber);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.trackBarThredNumber);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(240, 139);
+            this.panel1.Size = new System.Drawing.Size(312, 186);
             this.panel1.TabIndex = 0;
+            // 
+            // cpuLabel
+            // 
+            this.cpuLabel.AutoSize = true;
+            this.cpuLabel.Location = new System.Drawing.Point(48, 28);
+            this.cpuLabel.Name = "cpuLabel";
+            this.cpuLabel.Size = new System.Drawing.Size(207, 15);
+            this.cpuLabel.TabIndex = 4;
+            this.cpuLabel.Text = "Your machine has x logical processors";
             // 
             // textThredNumber
             // 
             this.textThredNumber.Enabled = false;
             this.textThredNumber.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textThredNumber.Location = new System.Drawing.Point(157, 31);
+            this.textThredNumber.Location = new System.Drawing.Point(204, 58);
             this.textThredNumber.MaxLength = 2;
             this.textThredNumber.Name = "textThredNumber";
             this.textThredNumber.Size = new System.Drawing.Size(65, 39);
             this.textThredNumber.TabIndex = 3;
             this.textThredNumber.Text = "1";
             this.textThredNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textThredNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_ThreadNumber_keyPress);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 40);
+            this.label1.Location = new System.Drawing.Point(33, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(129, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "Choose thread number";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // trackBarThredNumber
             // 
-            this.trackBarThredNumber.Location = new System.Drawing.Point(16, 85);
+            this.trackBarThredNumber.Location = new System.Drawing.Point(16, 118);
             this.trackBarThredNumber.Maximum = 64;
             this.trackBarThredNumber.Minimum = 1;
             this.trackBarThredNumber.Name = "trackBarThredNumber";
-            this.trackBarThredNumber.Size = new System.Drawing.Size(206, 45);
+            this.trackBarThredNumber.Size = new System.Drawing.Size(278, 45);
             this.trackBarThredNumber.TabIndex = 0;
             this.trackBarThredNumber.Value = 1;
             this.trackBarThredNumber.Scroll += new System.EventHandler(this.scrool_changed);
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(211, 277);
+            this.panel2.Size = new System.Drawing.Size(205, 334);
             this.panel2.TabIndex = 0;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(40, 197);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(134, 72);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Save Results";
-            this.button3.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(40, 105);
+            this.button1.Location = new System.Drawing.Point(41, 194);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(134, 72);
             this.button1.TabIndex = 2;
@@ -257,29 +256,29 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(40, 12);
+            this.button2.Location = new System.Drawing.Point(41, 75);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(134, 72);
             this.button2.TabIndex = 1;
             this.button2.Text = "Run TIME TEST";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // pictureBoxLeft
             // 
             this.pictureBoxLeft.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBoxLeft.Location = new System.Drawing.Point(6, 6);
             this.pictureBoxLeft.Name = "pictureBoxLeft";
-            this.pictureBoxLeft.Size = new System.Drawing.Size(462, 281);
+            this.pictureBoxLeft.Size = new System.Drawing.Size(527, 338);
             this.pictureBoxLeft.TabIndex = 1;
             this.pictureBoxLeft.TabStop = false;
-            this.pictureBoxLeft.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pictureBox2
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Location = new System.Drawing.Point(477, 6);
+            this.pictureBox2.Location = new System.Drawing.Point(544, 6);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(463, 281);
+            this.pictureBox2.Size = new System.Drawing.Size(527, 338);
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.scrool_changed);
@@ -288,7 +287,7 @@
             // 
             this.splitContainer3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer3.Location = new System.Drawing.Point(6, 296);
+            this.splitContainer3.Location = new System.Drawing.Point(6, 353);
             this.splitContainer3.Name = "splitContainer3";
             this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -301,14 +300,13 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
-            this.splitContainer3.Size = new System.Drawing.Size(462, 281);
-            this.splitContainer3.SplitterDistance = 140;
+            this.splitContainer3.Size = new System.Drawing.Size(529, 338);
+            this.splitContainer3.SplitterDistance = 150;
             this.splitContainer3.TabIndex = 3;
-            this.splitContainer3.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer3_SplitterMoved);
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(314, 24);
+            this.buttonSave.Location = new System.Drawing.Point(363, 27);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(118, 91);
             this.buttonSave.TabIndex = 2;
@@ -319,7 +317,7 @@
             // buttonConvert
             // 
             this.buttonConvert.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.buttonConvert.Location = new System.Drawing.Point(169, 24);
+            this.buttonConvert.Location = new System.Drawing.Point(195, 27);
             this.buttonConvert.Name = "buttonConvert";
             this.buttonConvert.Size = new System.Drawing.Size(118, 91);
             this.buttonConvert.TabIndex = 1;
@@ -329,7 +327,7 @@
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(24, 24);
+            this.buttonLoad.Location = new System.Drawing.Point(26, 27);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(117, 91);
             this.buttonLoad.TabIndex = 0;
@@ -351,8 +349,8 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.panel5);
-            this.splitContainer4.Size = new System.Drawing.Size(462, 137);
-            this.splitContainer4.SplitterDistance = 231;
+            this.splitContainer4.Size = new System.Drawing.Size(529, 184);
+            this.splitContainer4.SplitterDistance = 264;
             this.splitContainer4.TabIndex = 0;
             // 
             // panel4
@@ -361,7 +359,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(227, 133);
+            this.panel4.Size = new System.Drawing.Size(260, 180);
             this.panel4.TabIndex = 0;
             // 
             // textBoxC
@@ -371,7 +369,7 @@
             this.textBoxC.Name = "textBoxC";
             this.textBoxC.ReadOnly = true;
             this.textBoxC.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxC.Size = new System.Drawing.Size(229, 134);
+            this.textBoxC.Size = new System.Drawing.Size(259, 177);
             this.textBoxC.TabIndex = 0;
             // 
             // panel5
@@ -380,7 +378,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(223, 133);
+            this.panel5.Size = new System.Drawing.Size(257, 180);
             this.panel5.TabIndex = 0;
             // 
             // textBoxASM
@@ -390,14 +388,14 @@
             this.textBoxASM.Name = "textBoxASM";
             this.textBoxASM.ReadOnly = true;
             this.textBoxASM.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxASM.Size = new System.Drawing.Size(229, 134);
+            this.textBoxASM.Size = new System.Drawing.Size(257, 177);
             this.textBoxASM.TabIndex = 1;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(970, 607);
+            this.ClientSize = new System.Drawing.Size(1103, 721);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
@@ -462,7 +460,7 @@
         private TextBox textBoxC;
         private Panel panel5;
         private TextBox textBoxASM;
-        private Button button3;
         private Button button1;
+        private Label cpuLabel;
     }
 }
