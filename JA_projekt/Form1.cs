@@ -61,26 +61,26 @@ namespace JA_projekt
             {
                 //geting file from dialog
                 String fileName = openFileDialog.FileName;
-                //loading file to bitmap
-                original = new Bitmap(fileName);
+                String extension = Path.GetExtension(fileName);
+                if (extension.Equals(".jpg"))
+                {
+                    //loading file to bitmap
+                    original = new Bitmap(fileName);
 
 
-                //new resized bitmap to display in small window
-                Bitmap bitmapToDisplay = new Bitmap(original, new System.Drawing.Size(pictureBoxLeft.Width, pictureBoxLeft.Height));
-                pictureBoxLeft.Image = bitmapToDisplay;
-
+                    //new resized bitmap to display in small window
+                    Bitmap bitmapToDisplay = new Bitmap(original, new System.Drawing.Size(pictureBoxLeft.Width, pictureBoxLeft.Height));
+                    pictureBoxLeft.Image = bitmapToDisplay;
+                }
             }
         }
 
         
-        
+        //CHANGE IF YOU CHANGE LOCALIZATION OF PROJECT
         [DllImport(@"D:\JA_projekt\JA_projekt\x64\Release\ASM.dll")]
         static extern void rgbEdit(float[,] rgb);
         private void buttonConvert_Click(object sender, EventArgs e)
         {
-            
-
-                //Gdy nie ma obrazu
                 if (original == null)
                 {
                     MessageBox.Show("Choose file to convert first!!!");
@@ -349,7 +349,8 @@ namespace JA_projekt
 
         private long convertionTest(Bitmap bitmap, bool asmDll, int threadNumber)
         {
-            long timeSum=0;
+            //long timeSum=0;
+            long timeMinimum = long.MaxValue;
             var howManyTIMES = 10;
 
             for (int i = 0; i < howManyTIMES; i++)
@@ -412,12 +413,16 @@ namespace JA_projekt
 
                 lockBitmap.UnlockBits();
                 watch.Stop();
-                timeSum += watch.ElapsedMilliseconds;
+                if (timeMinimum > watch.ElapsedMilliseconds)
+                {
+                    timeMinimum = watch.ElapsedMilliseconds; 
+                }
 
 
             }
 
-            return timeSum / howManyTIMES;
+            //return timeSum / howManyTIMES;
+            return timeMinimum;
 
             
         }
